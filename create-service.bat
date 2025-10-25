@@ -5,3 +5,5 @@ sc start ChrisWindowsDriverSec
 REM sc stop ChrisWindowsDriverSec
 REM sc delete ChrisWindowsDriverSec
 REM bcdedit.exe -set TESTSIGNING ON
+REM bcdedit /debug on
+REM bcdedit /set debugtype local

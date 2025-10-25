@@ -2,7 +2,7 @@
 
 use core::panic::PanicInfo;
 
-use winapi::km::wdm::{DbgPrint, DRIVER_OBJECT};
+use winapi::km::wdm::{DbgPrint, IoCreateDevice, DEVICE_OBJECT, DRIVER_OBJECT};
 use winapi::shared::ntdef::{NTSTATUS, UNICODE_STRING};
 use winapi::shared::ntstatus::STATUS_SUCCESS;
 
@@ -12,17 +12,33 @@ extern "C" {
 }*/
 
 #[unsafe(no_mangle)]
-pub extern "system" fn driver_entry(driver: &mut DRIVER_OBJECT, _: *const UNICODE_STRING) -> NTSTATUS {
+pub extern "system" fn DriverEntry(driver: &mut DRIVER_OBJECT, _: *const UNICODE_STRING) -> NTSTATUS {
+    let mut device: *mut DEVICE_OBJECT = core::ptr::null_mut();
+    let mut name: UNICODE_STRING = UNICODE_STRING {
+        Length: 0,
+        MaximumLength: 0,
+        Buffer: core::ptr::null_mut()
+    };
+
     unsafe {
-        DbgPrint("Hello World from the ChrisWindowsDriverSec\n\0".as_ptr());
+        IoCreateDevice(
+            driver,
+            0,
+            &mut name,
+            winapi::km::wdm::DEVICE_TYPE::FILE_DEVICE_UNKNOWN,
+            0,
+            0,
+            &mut device
+        );
+        DbgPrint("ChrisWindowsDriverSec is alive!\n\0".as_ptr());
     }
 
-    driver.DriverUnload = Some(driver_exit);
+    driver.DriverUnload = Some(DriverUnload);
 
     STATUS_SUCCESS /* NT_STATUS SUCCESS */
 }
 
-pub extern "system" fn driver_exit(driver: &mut DRIVER_OBJECT) {
+pub extern "system" fn DriverUnload(driver: &mut DRIVER_OBJECT) {
     unsafe {
         DbgPrint("Done!\0".as_ptr());
     }

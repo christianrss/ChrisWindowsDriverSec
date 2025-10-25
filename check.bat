@@ -1,0 +1,1 @@
+dumpbin /EXPORTS target\x86_64-pc-windows-msvc\debug\ChrisWindowsDriverSec.sys | findstr DriverEntry

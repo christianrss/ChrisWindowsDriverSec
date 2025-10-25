@@ -17,8 +17,6 @@ features = [
     "ntstatus"
 ]
 
-
-
 [lib]
 crate-type = ["cdylib"]
 

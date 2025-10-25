@@ -27,7 +27,7 @@ pub enum DirectoryType {
 }
 
 /// Retrieves the path to the kernel mode libraries. The path may look something like:
-/// `C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\km`.
+/// `C:\Program Files (x86)\Windows Kits\10\lib\10.0.26100.0\km`.
 pub fn get_km_dir(dir_type: DirectoryType) -> Result<PathBuf, Error> {
     // We first append lib to the path an read the directory
     let dir = get_windows_kits_dir()?

@@ -1,0 +1,2 @@
+sc stop ChrisWindowsDriverSec
+sc delete ChrisWindowsDriverSec

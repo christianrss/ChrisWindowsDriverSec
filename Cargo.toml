@@ -5,6 +5,20 @@ edition = "2024"
 
 [dependencies]
 
+[build-dependencies]
+thiserror = "1.0"
+winreg = "0.10"
+
+[dependencies.winapi]
+git = "https://github.com/Trantect/winapi-rs.git"
+branch = "feature/km"
+features = [
+    "wdm",
+    "ntstatus"
+]
+
+
+
 [lib]
 crate-type = ["cdylib"]
 
